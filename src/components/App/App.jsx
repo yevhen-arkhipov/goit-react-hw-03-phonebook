@@ -1,14 +1,22 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { nanoid } from 'nanoid';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { PhonebookTitle, ContactsTitle } from './App.styled';
 
 import Box from 'components/Box';
 import ContactForm from 'components/ContactForm';
 import Filter from 'components/Filter';
 import ContactList from 'components/ContactList';
 
-export class App extends Component {
+import { GlobalStyle } from './GlobalStyle';
+import {
+  Section,
+  PhonebookWrapper,
+  PhonebookTitle,
+  ContactsWrapper,
+  ContactsTitle,
+} from './App.styled';
+
+class App extends Component {
   state = {
     filter: '',
     contacts: [
@@ -27,6 +35,7 @@ export class App extends Component {
     );
 
     resetForm();
+
     if (!nameСomparison) {
       const contact = { id: nanoid(), name, number };
 
@@ -92,35 +101,15 @@ export class App extends Component {
           boxShadow="outline"
           as="main"
         >
-          <Box
-            pt={1}
-            pb={1}
-            bg="btnColor"
-            boxShadow="outline"
-            borderRadius="5px"
-            as="section"
-          >
-            <Box
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              mb={1}
-              width="400px"
-              as="div"
-            >
+          <Section>
+            <PhonebookWrapper>
               <PhonebookTitle>Phonebook</PhonebookTitle>
               <ContactForm
                 onSubmit={this.contactsHandler}
                 options={{ name: '', number: '' }}
               />
-            </Box>
-            <Box
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              width="400px"
-              as="div"
-            >
+            </PhonebookWrapper>
+            <ContactsWrapper>
               <ContactsTitle>Contacts</ContactsTitle>
               <Filter
                 filter={this.state.filter}
@@ -130,10 +119,13 @@ export class App extends Component {
                 contacts={this.filterContacts}
                 onDeleteContact={this.deleteContact}
               />
-            </Box>
-          </Box>
+            </ContactsWrapper>
+          </Section>
         </Box>
+        <GlobalStyle />
       </>
     );
   }
 }
+
+export default App;
